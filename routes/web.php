@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\GetJsonController;
+>>>>>>> 85a3fb97b6e587499bdaa5ec6c3b1015194f4a96
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+<<<<<<< HEAD
+=======
+
+Route::get('/getjson/', [GetJsonController::class, 'getJSON']);
+>>>>>>> 85a3fb97b6e587499bdaa5ec6c3b1015194f4a96

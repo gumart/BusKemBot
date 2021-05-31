@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+<<<<<<< HEAD
     /**
      * The attributes that are mass assignable.
      *
@@ -40,4 +41,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+=======
+    public $timestamps = false;
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'username',
+        'message_update_id',
+        'chat_id'
+    ];
+
+    public function message_update()
+    {
+        return $this->hasOne(MessageUpdate::class);
+    }
+>>>>>>> 85a3fb97b6e587499bdaa5ec6c3b1015194f4a96
 }
