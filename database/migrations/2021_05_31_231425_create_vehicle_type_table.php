@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessagesUpdatesTable extends Migration
+class CreateVehicleTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateMessagesUpdatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('messages_updates', function (Blueprint $table) {
+        Schema::create('vehicles_types', function (Blueprint $table) {
             $table->id();
-            $table->string('update_id');
+            $table->string('vehicle_type');
+            $table->integer('user_id')->nullable();
         });
     }
 
@@ -26,6 +27,6 @@ class CreateMessagesUpdatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('messages_updates');
+        Schema::dropIfExists('vehicles_types');
     }
 }

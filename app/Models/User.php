@@ -17,12 +17,19 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'username',
-        'message_update_id',
-        'chat_id'
+        'chat_id',
+        'last_command',
+        'vehicle_type_id',
+        'route_number_id'
     ];
 
-    public function message_update()
+    public function vehicle_type()
     {
-        return $this->hasOne(MessageUpdate::class);
+        return $this->hasOne(VehicleType::class, 'id', 'vehicle_type_id');
+    }
+
+    public function route_number()
+    {
+        return $this->hasOne(RouteNumber::class, 'id', 'route_number_id');
     }
 }
