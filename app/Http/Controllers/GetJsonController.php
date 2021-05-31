@@ -23,7 +23,11 @@ class GetJsonController extends Controller
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        dd($data['data']["r9894cc6a21f4e449a169672f22d26386"]);
+        // dd($data['data']["r9894cc6a21f4e449a169672f22d26386"]);
+
+        foreach($data['data'] as $d) {
+            dd($d);
+        }
     }
 
 }
