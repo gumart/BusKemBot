@@ -20,7 +20,8 @@ class User extends Authenticatable
         'chat_id',
         'last_command',
         'vehicle_type_id',
-        'route_number_id'
+        'route_number_id',
+        'stop_id'
     ];
 
     public function vehicle_type()
@@ -31,5 +32,10 @@ class User extends Authenticatable
     public function route_number()
     {
         return $this->hasOne(RouteNumber::class, 'id', 'route_number_id');
+    }
+
+    public function stop()
+    {
+        return $this->hasOne(Stop::class, 'id', 'stop_id');
     }
 }

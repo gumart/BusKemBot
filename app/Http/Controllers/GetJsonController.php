@@ -25,9 +25,11 @@ class GetJsonController extends Controller
 
         // dd($data['data']["r9894cc6a21f4e449a169672f22d26386"]);
 
-        foreach($data['data'] as $d) {
-            dd($d);
-        }
+        // foreach($data['data'] as $d) {
+        //     dd($d);
+        // }
+
+        dd($data['data']);
     }
 
 }

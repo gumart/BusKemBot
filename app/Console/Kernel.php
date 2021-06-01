@@ -27,6 +27,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
     }
 
+    protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
+    {
+        $shortSchedule->command('get:message')->everySecond(2);
+    }
+
     /**
      * Register the commands for the application.
      *
