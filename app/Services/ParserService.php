@@ -16,10 +16,11 @@ class ParserService
 
         foreach($list_of_dates as $date) {
             if($date > $current_date) {
-                return $date;
+                return "\nБлижайший автобус пребудет в " . $date;
             }
         }
 
+        return "\nБлижайший автобус пребудет завтра в: " . $list_of_dates[0];
     }
 
     public static function getStops(User $user)
@@ -95,7 +96,7 @@ class ParserService
                     }
                     $flag = True;
 
-                    $message .= "\nБлижайший автобус пребудет в " . ParserService::getDate($list_of_dates);
+                    $message .= ParserService::getDate($list_of_dates);
 
                     break;
                 }
