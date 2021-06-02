@@ -50,13 +50,37 @@ class CommunicationController extends Controller
                 ]
             ];
 
-            $encoded_markup = json_encode($reply_markup);
+            $reply_markup_back = [
+                'keyboard' => [
+                    ['Назад']
+                ]
+            ];
 
-            $client->request('GET', 'sendMessage', ['query' => [
-                'chat_id' => $user->chat_id,
-                'text' => 'Выберите тип маршрутного транспортного стредства',
-                'reply_markup' => $encoded_markup
-            ]]);
+            if($text!='Назад'){
+
+                    $encoded_markup = json_encode($reply_markup);
+
+                    $client->request('GET', 'sendMessage', ['query' => [
+                        'chat_id' => $user->chat_id,
+                        'text' => 'Выберите тип маршрутного транспортного стредства',
+                        'reply_markup' => $encoded_markup
+                    ]]);
+            } else {
+
+                $user->last_command='/choose_stop';
+
+                $user->save();
+
+                $encoded_markup = json_encode($reply_markup_back);
+
+                $stop_list = ParserService::getStops($user);
+
+                $client->request('GET', 'sendMessage', ['query' => [
+                    'chat_id' => $user->chat_id,
+                    'text' => $stop_list,
+                    'reply_markup' => $encoded_markup
+                ]]);
+            }
         
         } elseif($last_command == '/choose_bus_type') {
 
@@ -81,16 +105,38 @@ class CommunicationController extends Controller
 
             $text = CommunicationController::convertBusType($text);
 
-            if($text!='') {
-                BusService::chooseBusType($user, $text);
+            if($text=='Назад'){
+                $user->last_command = '/start';
+
+                $user->save();
+
+                $encoded_markup = json_encode($reply_markup_bus_type);
 
                 $client->request('GET', 'sendMessage', ['query' => [
                     'chat_id' => $user->chat_id,
-                    'text' => 'Укажите номер маршрута',
+                    'text' => 'Выберите тип маршрутного транспортного стредства',
                     'reply_markup' => $encoded_markup
                 ]]);
+
+            } elseif($text!='') {
+                BusService::chooseBusType($user, $text);
+
+                $message = ParserService::getRoutes($user);
+
+                $client->request('GET', 'sendMessage', ['query' => [
+                    'chat_id' => $user->chat_id,
+                    'text' => $message . "\nУкажите номер маршрута",
+                    'reply_markup' => $encoded_markup
+                ]]);
+            
             } else {
+
+                $user->last_command = '/choose_bus_type';
+
+                $user->save();
+
                 $encoded_markup = json_encode($reply_markup_bus_type);
+
                 $client->request('GET', 'sendMessage', ['query' => [
                     'chat_id' => $user->chat_id,
                     'text' => 'Вы указали неверный тип транспортного средства. Пожалуйста, воспользуйтесь клавиатурой, или введите правильное название автобуса',
@@ -132,9 +178,9 @@ class CommunicationController extends Controller
                 ]]);
             } else {
 
-                $encoded_markup = json_encode($reply_markup);
+                $encoded_markup = json_encode($reply_markup_bus_type);
                 
-                $user->last_command = '/choose_route_number';
+                $user->last_command = '/choose_bus_type';
                 
                 $user->save();
 
@@ -155,15 +201,36 @@ class CommunicationController extends Controller
                 'remove_keyboard' => true
             ];
 
-            $encoded_markup = json_encode($reply_markup);
+            $reply_markup_back = [
+                'keyboard' => [
+                    ['Назад']
+                ]
+            ];
 
-            $comings = ParserService::getComings($user, $text);
+            if($text!='Назад') {
+                $encoded_markup = json_encode($reply_markup_back);
+                $comings = ParserService::getComings($user, $text);
 
-            $client->request('GET', 'sendMessage', ['query' => [
-                'chat_id' => $user->chat_id,
-                'text' => $comings,
-                'reply_markup' => $encoded_markup
-            ]]);
+                $client->request('GET', 'sendMessage', ['query' => [
+                    'chat_id' => $user->chat_id,
+                    'text' => $comings,
+                    'reply_markup' => $encoded_markup
+                ]]);
+            } else {
+
+                $encoded_markup = json_encode($reply_markup_back);
+
+                $user->last_command = '/choose_route_number';
+                $user->save();
+                
+                $message = ParserService::getRoutes($user);
+
+                $client->request('GET', 'sendMessage', ['query' => [
+                    'chat_id' => $user->chat_id,
+                    'text' => $message . "\nУкажите номер маршрута",
+                    'reply_markup' => $encoded_markup
+                ]]);
+            }
         }
     }
 }

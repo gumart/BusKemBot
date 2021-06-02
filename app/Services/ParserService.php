@@ -116,4 +116,35 @@ class ParserService
 
         return $message;
     }
+
+    public static function getRoutes(User $user) {
+        $message="";
+
+        $list_of_dates = [];
+
+        $numbers_of_stops=0;
+
+        $flag = False;
+
+        $client = new Client([
+            'base_uri' => 'https://bus.vse42.ru/api/kema/routes/'
+        ]);
+
+        $response = $client->request('GET', '',[
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        $vehicle_type = $user->vehicle_type->vehicle_type;
+
+        $all_routes = $data[$vehicle_type];
+
+        $message .= "Доступные маршруты для этого транспортного средства: \n\n";
+
+        foreach($all_routes['routes'] as $route) {
+            $message .= $route . "\n";
+        }
+
+        return $message;
+    }
 }

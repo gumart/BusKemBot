@@ -29,10 +29,10 @@ class Kernel extends ConsoleKernel
 
     protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
     {
-        $shortSchedule->command('get:message')->everySecond(0.5);
+        $shortSchedule->command('get:message')->everySecond(3);
     }
 
-    /**
+    /** 
      * Register the commands for the application.
      *
      * @return void
