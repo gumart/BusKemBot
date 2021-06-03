@@ -11,7 +11,7 @@ class ParserService
     public static function getDate($list_of_dates)
     {
         date_default_timezone_set('Asia/Novosibirsk');
-       
+
         $current_date = date('H:i');
 
         foreach($list_of_dates as $date) {
@@ -28,6 +28,8 @@ class ParserService
         $message="";
 
         $number_of_stops=0;
+
+        sleep(2);
 
         $client = new Client([
             'base_uri' => 'https://bus.vse42.ru/api/kema/routedirections/'
@@ -72,6 +74,8 @@ class ParserService
         $numbers_of_stops=0;
 
         $flag = False;
+
+        sleep(2);
 
         $client = new Client([
             'base_uri' => 'https://bus.vse42.ru/api/kema/routedirections/'
@@ -125,6 +129,8 @@ class ParserService
         $numbers_of_stops=0;
 
         $flag = False;
+
+        sleep(2);
 
         $client = new Client([
             'base_uri' => 'https://bus.vse42.ru/api/kema/routes/'

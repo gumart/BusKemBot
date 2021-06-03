@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
 
     protected function shortSchedule(\Spatie\ShortSchedule\ShortSchedule $shortSchedule)
     {
-        $shortSchedule->command('get:message')->everySecond(3);
+        $shortSchedule->command('get:message')->everySecond(1.5);
     }
 
     /** 
